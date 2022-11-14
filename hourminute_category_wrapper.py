@@ -31,24 +31,14 @@ class HourMinuteCategoryModel(ModelWrapper):
         x = BatchNormalization()(x)
         x = Flatten()(x)
 
-        #hour = Conv2D(32, 4, activation='relu')(x)
-        #hour = MaxPool2D(pool_size=(4, 4), padding='valid')(hour)
-        #hour = BatchNormalization()(hour)
-        #hour = Flatten()(hour)
         hour = Dense(24, activation='relu')(x)
         hour = Dropout(0.1)(hour)
         hour = Dense(48, activation='relu', kernel_regularizer='l2')(hour)
-        #hour = Dense(24, activation='relu')(hour)
         hour = Dense(24, activation='softmax', name="hour_output")(hour)
 
-        #minute = Conv2D(32, 4, activation='relu')(x)
-        #minute = MaxPool2D(pool_size=(4, 4), padding='valid')(minute)
-        #minute = BatchNormalization()(minute)
-        #minute = Flatten()(minute)
         minute = Dense(60, activation='relu')(x)
         minute = Dropout(0.1)(minute)
         minute = Dense(120, activation='relu', kernel_regularizer='l2')(minute)
-        #minute = Dense(60, activation='relu')(minute)
         minute = Dense(60, activation='softmax', name="minute_output")(minute)
 
         self.model = Model(inputs=inputs, outputs = [hour, minute], name="hhmmcat")
@@ -56,11 +46,8 @@ class HourMinuteCategoryModel(ModelWrapper):
 
     def compile_model(self):
         adam_optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001, epsilon = 1e-05, amsgrad = False, name = 'Adam')
-        nadam_optimizer = tf.keras.optimizers.Nadam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07, name="Nadam")
 
         cg = tf.keras.losses.CategoricalCrossentropy()
-        scg = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
-        bc = tf.keras.losses.BinaryCrossentropy(from_logits=False),
 
         self.model.compile(optimizer=adam_optimizer, loss=cg, metrics=self.metrics)
         

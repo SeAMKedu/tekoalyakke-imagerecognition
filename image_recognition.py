@@ -177,7 +177,7 @@ def test_model(wrapper, num):
     plt.close()
 
 
-def run(ds, wrapper, tests):
+def run(wrapper, tests):
     if not Path(wrapper.model_savepath).exists():
         wrapper.setup()
         wrapper.train_model(save=True)
@@ -188,16 +188,16 @@ def run(ds, wrapper, tests):
 
     test_model(wrapper, tests)
 
-sample_size=1.0
+sample_size=1
 epochs = 200
 test_num = 10
 batch_size=32
 
 ds = DataSet(IMAGES, sample_size=sample_size, batch_size=batch_size, image_size=(128, 128))
 
-# NOTE: When creating a new model, it sets the ds mode and can't be
+# REMINDER: When creating a new model, it sets the ds mode and can't be
 # directly used in another model without setting it again correctly
 
-run(ds, HourMinuteModel(ds, epochs = epochs), tests = test_num)
-run(ds, HourMinuteCategoryModel(ds, epochs = epochs), tests = test_num)
-run(ds, TimeCategoryModel(ds, epochs = epochs), tests = test_num)
+run(HourMinuteModel(ds, epochs = epochs), tests = test_num)
+run(HourMinuteCategoryModel(ds, epochs = epochs), tests = test_num)
+run(TimeCategoryModel(ds, epochs = epochs), tests = test_num)

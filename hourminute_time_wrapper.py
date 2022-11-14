@@ -40,11 +40,8 @@ class TimeCategoryModel(ModelWrapper):
 
     def compile_model(self):
         adam_optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001, epsilon = 1e-05, amsgrad = False, name = 'Adam')
-        nadam_optimizer = tf.keras.optimizers.Nadam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-07, name="Nadam")
 
         cg = tf.keras.losses.CategoricalCrossentropy()
-        bc = tf.keras.losses.BinaryCrossentropy(from_logits=False),
-        huber = tf.keras.losses.Huber(delta=1.0, reduction="auto", name="huber_loss")
 
         self.model.compile(optimizer=adam_optimizer, loss=cg, metrics=self.metrics)
         
