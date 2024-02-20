@@ -13,6 +13,7 @@
 [model2]:            /img/model_hhmmcat_lock.png
 [model3]:            /img/model_time_lock.png
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10682601.svg)](https://doi.org/10.5281/zenodo.10682601)
 
 # Kuvantunnistus
 
